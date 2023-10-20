@@ -1,0 +1,96 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static '/assets/imagens/logo.jpg' %}">
+    <title>Pizzaria do Zé</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cor: '#da373d',
+                    },
+                    fontFamily: {
+                        principal: 'Poppins, sans-serif',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-zinc-50 font-principal">
+    <header class="bg-red-200 px-20 py-3">
+        <navbar>
+            <a>
+                <img class="w-28 rounded-2xl" src="{% static '/assets/imagens/logo.jpg' %}">
+                <span class="sr-only">Logo da pizzaria com um letreiro led azul escrito "pizza".</span>
+            </a>
+        </navbar>
+    </header>
+    <main>
+        <section>
+            <div class="bg-red-600 flex items-center justify-center">
+              <div class="w-2/3">
+                  <h1 class="text-6xl font-bold text-zinc-50 text-center py-20">Seja bem-vindo a melhor pizzaria da cidade!</h1>
+              </div>
+            </div>
+
+            <div class="mx-20 my-10 w-3/4">
+                <h2 class="text-4xl font-semibold text-red-600">Cardápio</h2>
+
+                {% if itens %}
+                {% for item in itens %}
+                
+                <div class="flex mt-10 shadow-2xl rounded-r-3xl">
+                    <div>
+
+                        {% if item.foto == "" or item.foto == null %}
+
+                        <img class="w-60" src="{% static 'assets/imagens/not-found.png' %}">
+                        <span class="sr-only">imagem de foto não encontrada.</span>
+
+                        {% else %}
+
+                        <img class="w-60" src="{{ item.foto.url }}">
+                        <span class="sr-only">Foto da pizza de {{ item.nome }}.</span>
+
+                        {% endif %}
+
+                    </div>
+                    <div class="flex flex-col item-center justify-center pl-10">
+                        <h3 class="text-2xl font-medium text-red-600">{{ item.nome }}</h3>
+                        <p>{{ item.descricao }}</p>
+                        <p>{{ item.serve_pessoas }}</p>
+                        <p class="text-xl mt-5 font-medium text-red-600">R${{ item.preco }}</p>
+                    </div>
+                </div>
+
+                {% endfor %}
+                {% else %}
+
+                <h1 class="text-2xl font-semibold text-red-600">Nenhum item foi encontrado!</h1>
+
+                {% endif %}
+
+            <div class="mt-20">
+                <h1 class="text-red-600 font-bold text-4xl">Quer fazer um pedido?</h1>
+                  <div class="flex gap-3 mt-3">
+                      <h3 class="text-red-600 font-bold text-xl">Entre em contato conosco:</h3>
+                      <p class="text-lg">(XX) XXXXX-XXXX.</p>
+                  </div>
+              </div>
+          </section>
+    </main>
+    <footer class="bg-red-600 text-center py-7">
+        <h3 class="text-zinc-50">Desenvolvido por Rodrigo Malavasi</h3>
+    </footer>
+</body>
+</html>
